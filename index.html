@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main-div">
+      <h1>X-O-X-- Tic Tac To --X-O-X</h1>
+      <h2 class="turn">It's Turn :</h2>
+      <div class="game-end">
+        <h1>Game Over : <span>X Wins</span></h1>
+      </div>
+      <div class="inner-div">
+        <div class="row">
+          <input type="text" class="col" readonly />
+          <input type="text" class="col" readonly />
+          <input type="text" class="col" readonly />
+        </div>
+        <div class="row">
+          <input type="text" class="col" readonly />
+          <input type="text" class="col" readonly />
+          <input type="text" class="col" readonly />
+        </div>
+        <div class="row">
+          <input type="text" class="col" readonly />
+          <input type="text" class="col" readonly />
+          <input type="text" class="col" readonly />
+        </div>
+      </div>
+      <div class="btns">
+        <button class="btn restart">Restart</button>
+      </div>
+    </div>
+    <script>
+      const cols = document.querySelectorAll(".col");
+      const turnContainer = document.querySelector(".turn");
+      const restart = document.querySelector(".restart");
+      const gameEnd = document.querySelector(".game-end");
+      var turn = 0;
+      if (turn % 2 === 0) {
+        turnContainer.innerHTML = "It's Turn : <span>O</span>";
+      } else {
+        turnContainer.innerHTML = "It's Turn : <span>X</span>";
+      }
+      for (let i = 0; i < cols.length; i++) {
+        cols[i].addEventListener("click", () => {
+          if (turn % 2 === 0) {
+            cols[i].value = "O";
+            turnContainer.innerHTML = "It's Turn : <span>X</span>";
+          } else {
+            cols[i].value = "X";
+            turnContainer.innerHTML = "It's Turn : <span>O</span>";
+          }
+
+          turn = turn + 1;
+          if (
+            (cols[0].value === cols[1].value &&
+              cols[1].value === cols[2].value &&
+              cols[0].value === cols[i].value) ||
+            (cols[3].value === cols[4].value &&
+              cols[4].value === cols[5].value &&
+              cols[3].value === cols[i].value) ||
+            (cols[6].value === cols[7].value &&
+              cols[7].value === cols[8].value &&
+              cols[6].value === cols[i].value) ||
+            (cols[0].value === cols[3].value &&
+              cols[3].value === cols[6].value &&
+              cols[0].value === cols[i].value) ||
+            (cols[1].value === cols[4].value &&
+              cols[4].value === cols[7].value &&
+              cols[1].value === cols[i].value) ||
+            (cols[2].value === cols[5].value &&
+              cols[5].value === cols[8].value &&
+              cols[2].value === cols[i].value) ||
+            (cols[0].value === cols[4].value &&
+              cols[4].value === cols[8].value &&
+              cols[0].value === cols[i].value) ||
+            (cols[2].value === cols[4].value &&
+              cols[4].value === cols[6].value &&
+              cols[2].value === cols[i].value)
+          ) {
+            gameEnd.style.display = "flex";
+            gameEnd.innerHTML = `<h1>Game Over : <span>${cols[i].value} Wins</span></h1>
+                                        <p>Press any key to restart</p>`;
+          } else {
+            if (
+              cols[0].value !== "" &&
+              cols[1].value !== "" &&
+              cols[2].value !== "" &&
+              cols[3].value !== "" &&
+              cols[4].value !== "" &&
+              cols[5].value !== "" &&
+              cols[6].value !== "" &&
+              cols[7].value !== "" &&
+              cols[8].value !== ""
+            ) {
+              gameEnd.style.display = "flex";
+              gameEnd.innerHTML = `<h1>Game Over : <span>No ones Wins</span></h1>
+                                        <p>Press any key to restart</p>`;
+            }
+          }
+        });
+      }
+
+      restart.addEventListener("click", () => {
+        for (let i = 0; i < cols.length; i++) {
+          cols[i].value = "";
+          turn = 0;
+          turnContainer.innerHTML = "It's Turn : <span>O</span>";
+        }
+      });
+
+      gameEnd.addEventListener("click", () => {
+        gameEnd.style.display = "none";
+        for (let i = 0; i < cols.length; i++) {
+          cols[i].value = "";
+          turn = 0;
+          turnContainer.innerHTML = "It's Turn : <span>O</span>";
+        }
+      });
+    </script>
+  </body>
+</html>
